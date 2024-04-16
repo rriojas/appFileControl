@@ -58,7 +58,7 @@ namespace appFileControl
             }
             File.Move(file, txtFolder.Text + "\\Pics\\" + fileName);
             break;
-          
+
           default:
             //Move the file to the other folder
             if (!Directory.Exists(txtFolder.Text + "\\other"))
@@ -69,6 +69,38 @@ namespace appFileControl
             break;
         }
       }
+    }
+
+    private void btnOpenTextFile_Click(object sender, EventArgs e)
+    {
+      //Open a file dialog to select the file
+      OpenFileDialog dialog = new OpenFileDialog();
+      dialog.Filter = "Text Files|*.txt";
+      dialog.Title = "Select a Text File";
+      //if the user select a file, set the path to the textbox
+      if (dialog.ShowDialog() != DialogResult.OK)
+      {
+        return;
+      }
+      //Read the file and show the content in the txtContent textbox
+      txtContent.Text = File.ReadAllText(dialog.FileName);
+
+    }
+
+    private void btnSaveTextFile_Click(object sender, EventArgs e)
+    {
+      //save the content of the txtContent textbox to a new file
+      SaveFileDialog dialog = new SaveFileDialog();
+      dialog.Filter = "Text Files|*.txt";
+      dialog.Title = "Save the Text File";
+      //if the user select a file, set the path to the textbox
+      if (dialog.ShowDialog() != DialogResult.OK)
+      {
+        return;
+      }
+      //Write the content of the txtContent textbox to the file
+      File.WriteAllText(dialog.FileName, txtContent.Text);
+
     }
   }
 }
